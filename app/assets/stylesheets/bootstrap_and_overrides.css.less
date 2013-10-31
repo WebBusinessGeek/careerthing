@@ -1,0 +1,367 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings");
+@iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white");
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+// @fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+// @fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot#iefix");
+// @fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+// @fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+// @fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+
+// Font Awesome
+// @import "fontawesome/font-awesome";
+
+// Glyphicons
+@import "twitter/bootstrap/sprites.less";
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+
+@navbarBackground: #1A1A18; /* careerthing */
+@navbarBackgroundHighlight: #393939; /* careerthing */
+@navbarText: #808080; /* careerthing */
+@navbarBrandColor: #fff;
+@navbarLinkColor: #808080; /* careerthing */
+
+
+
+@font-face {
+	font-family: 'NEUROPOL1';
+	src: url(NEUROPOL.ttf);
+}
+
+@font-face {
+	font-family: 'MuseoSlabLight';
+	src: url(MuseoSlab300.eot?#iefix),
+		 url(MuseoSlab300.woff),
+		 url(MuseoSlab300.ttf);
+}
+
+
+@font-face {
+	font-family: 'MuseoSlabRegular';
+	src: url(MuseoSlab500.eot?#iefix),
+		 url(MuseoSlab500.woff),
+		 url(MuseoSlab500.ttf);
+}
+@font-face {
+	font-family: 'ProximaNovaRegular';
+	src: url(ProximaNovaReg.eot?#iefix),
+		 url(ProximaNovaReg.woff),
+		 url(ProximaNovaReg.ttf);
+}
+@font-face {
+	font-family: 'ProximaNovaBold';
+	src: url(ProximaNovaExtraBold.eot?#iefix),
+		 url(ProximaNovaExtraBold.woff),
+		 url(ProximaNovaExtraBold.ttf);
+}
+
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+    color: #ffffff;
+}
+
+.modal-header {
+  border-bottom: none !important;
+}
+
+.navbar .pull-left > li > a {
+  line-height: 10ex;
+}
+
+.navbar .pull-right > a {
+  margin-top: 4ex;
+}
+
+.blog-holder {
+  box-shadow: 1px 1px 2px 0 #D0D0D0;
+  margin: 0 3ex 4.5ex;
+  padding: 0;
+  background-color: #fff;
+}
+
+.blog-holder .blog-category {
+  padding: 2ex 0px 0px 12px;
+  width: 96%;
+}
+
+.blog-holder .blog-category a, h6 {
+  color: #AAAAAA;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#center_blogs .blog-title {
+  padding-top: 12px;
+}
+
+.blog-holder .blog-title {
+  padding: 0ex 0px 0px 12px;
+  width: 96%;
+}
+
+.blog-holder .blog-description {
+  padding: 0ex 0px 0px 2ex;
+  width: 96%;
+}
+
+.blog-holder .blog-sharing {
+  padding: 2ex 0px 0px 0.5ex;
+  width: 96%;
+}
+
+.blog-holder > .thumbnails {
+  box-shadow: 1px 1px 2px 0 #D0D0D0;
+  border-color: #E4E4E4 #BEBEBD #BEBEBD #E4E4E4;
+  border-style: solid;
+  border-width: 1px;
+  border-image: none;
+}
+
+.left-blog-holder {
+  padding: 0 20px 25px 20px;
+  /*overflow:auto; */
+}
+
+.left-blog-holder > div,ul {
+  margin-bottom: 0;
+}
+
+.thumbnails > li {
+  margin-bottom: 0;
+  margin-right: 1ex;
+  min-height: 10ex;
+}
+
+.thumbnails img.blogimage {
+  min-height: 11ex;
+}
+
+.thumbnails > div.span9 {
+  margin-left: 0;
+}
+
+.thumbnails > div.span9 > div {
+  min-height: 53px;
+  margin-bottom: 5px;
+}
+
+.left-blog-holder div.span9 > .row-fluid {
+  min-height: 53px;
+}
+.left-blog-shares {
+  left:0;
+  top:0;
+  position: absolute;
+  color: #AAAAAA;
+  font-size: 12px;
+}
+.blog-shares {
+  left:0;
+  top:0;
+  position: absolute;
+  color: #AAAAAA;
+  font-size: 12px;
+  padding: 0ex 0px 0px 12px;
+  width: 96%;
+  margin-top: 10px;
+}
+.left-blog-sharing {
+  left:0;
+  top:0;
+  position: absolute;
+  visibility: hidden
+}
+.thumbnails .blog-sharing {
+  padding: 0ex 0px 0px 12px;
+  width: 96%;
+  margin-top: 10px;
+  visibility: hidden
+}
+
+
+.left-blog-sharing a {
+  color: #AAAAAA;
+  font-size: 12px;
+}
+
+.hgroup > span.span4 {
+  margin-top: 2.5ex;
+  text-align:right;
+}
+
+.container .span3 {
+  margin-left: 0;
+}
+
+.container .article {
+  background-color: #fff;
+  padding: 4ex;
+}
+
+.article img {
+  padding: 4ex 0;
+}
+
+.tag {
+  color: #69A03B;
+  text-transform: uppercase;
+}
+
+.sort > a {
+  color: #A6A6A6;
+}
+
+.follow, .comment, .follow:hover, .comment:hover, .follow:active, .comment:active, .follow:focus, .comment:focus {
+  background-color: #BCD114;
+  background-image: none;
+  color: #fff;
+}
+
+.author-name {
+  color: #636466;
+  font-family: "ProximaNovaBold";
+  font-size: 2ex;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.time {
+  color: #CCCCCC;
+  content: '/';
+  border-top: 1px solid #CCCCCC;
+  font-weight: bold;
+  line-height: 6em;
+  padding-top: 1em;
+  font-family: "ProximaNovaRegular";
+}
+
+.author-details img{ padding-bottom:0px;float:left;text-align:left;}
+.author-details .time{line-height:auto;padding-top:0px;font-size:16px;float:left;text-align:left;line-height:2em;}
+.author-details .author-name{float:left;text-align:left;}
+
+.blog-category > .span3 .hgroup {
+  line-height: 5ex;
+  width: 100%;
+}
+
+.follow-careerthing {
+    font-family: arapeyregular;
+    text-decoration: underline;
+    text-transform: uppercase;
+    font-size: 2ex;
+}
+
+.blog-container {
+  background-color: #fff;
+}
+
+.article h2 {
+  font-family: MuseoSlabLight, sans-serif;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 55px;
+  word-wrap: break-word;
+}
+
+.article .blog-description {
+  font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  vertical-align: baseline;
+  color: #333333;
+  line-height: 27px;
+  text-align: justify;
+  word-wrap: break-word;
+}
+
+.article .blog-description a{
+  color: #6DC1E6 !important;
+}
+.article .blog-description a:hover{
+  color: #6DC1E6 !important;
+  text-decoration:underline;
+}
+
+.blog-title {
+  word-wrap: break-word;
+  font-size: 24px;
+  line-height:2ex;
+  text-transform: capitalize;
+  font-family: 'MuseoSlabLight', sans-serif;
+}
+
+.left-blog-holder .blog-title {
+  font-size: 16px !important;
+}
+
+.withshow .blog-title {
+  font-size: 16px !important;
+}
+
+.blog-description {
+  width: 90% !important;
+  text-align: justify;
+  word-wrap: break-word;
+  font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333333;
+}
+
+.blog-description a{
+  color: #6DC1E6 !important;
+}
+.blog-description a:hover{
+  color: #6DC1E6 !important;
+  text-decoration:underline;
+}
+.blog-sharing a {
+  width: 100% !important;
+}
+.blog-sharing a:hover {
+  background-color:transparent !important;
+  text-decoration:none;
+  width: 100% !important;
+}
+.stTwitterFollowFrame {
+  width: 95px !important;
+}
+.st_plusone_hcount div {
+  vertical-align:bottom !important;
+}
+
+.navbar .nav > li > a:hover {
+  color:#fff /* careerthing */
+}
+
+.navbar .nav > li > a
+{
+	padding: 12px 15px;
+	text-shadow:none;
+}
+
+.showpageshares{ color: #BCD114;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 80px;
+    
+    }
+.showsharedivider{ background: url("/assets/splitter.png") no-repeat scroll center center transparent;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 80px;
+    }
+    
+.navbar .nav .dropdown-toggle .caret{margin-top:33px;}

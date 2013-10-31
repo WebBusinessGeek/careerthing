@@ -1,0 +1,403 @@
+<%- model_class = Blog -%>
+
+<div class='row-fluid blog-category'>
+  <div class='span9'>
+    <div class='row-fluid'>
+      <div class='span12'>
+        <hgroup class="hgroup">
+          <h2 class='span8 pull-left'>
+            <%=t '.title', :default => @blog.category.title.titleize if @blog.category.present? %>
+          </h2>
+          <span class='span4 pull-right follow-careerthing'>
+            Keep tabs on CareerThing >
+          </span>
+        </hgroup>
+      </div>
+    </div>
+  </div>
+
+  <div class='span3'>
+    <div class='row-fluid'>
+      <div class='span12'>
+        <hgroup class="hgroup">
+          <span class='st_fblike_hcount' displayText='Like' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+          <span class='st_twitterfollow_hcount' displayText='Follow' st_username='sharethis' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+          <span class='st_plusone_hcount' displayText='' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+        </hgroup>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='row-fluid blog-container'>
+  <div class='span9 article'>
+    <div class='row-fluid'>
+      <div class='span12'>
+        <h2><%= @blog.title.titleize %></h2>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class='span12'>
+        <%= image_tag(@blog.main_pic.url, width: '100%') if @blog.main_pic.present? %>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class="span1" style="color:#AAAAAA">
+        <span id='showsharecount_<%=@blog.id%>' class="showpageshares"></span><br>SHARES
+		<%= content_for :custom_javascripts do %>
+			stButtons.getCount('<%=blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug)%>',"total", document.getElementById('showsharecount_<%=@blog.id%>'));
+		<% end %>
+      </div>
+      <div class="span1 showsharedivider">&nbsp;</div>
+      <div class='span10'>
+		<span class='st_facebook_vcount' displayText='Share' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+        <span class='st_twitter_vcount' displayText='Tweet' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+        <span class='st_googleplus_vcount' displayText='Share' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+        <span class='st_linkedin_vcount' displayText='Share' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+        <span class='st_stumbleupon_vcount' displayText='Share' st_title="<%= @blog.title %>" st_url="<%= blog_url(@blog.created_at.strftime('%Y'), @blog.created_at.strftime('%m'), @blog.created_at.strftime('%d'), @blog.slug) %>" st_summary="<%= short_description(@blog.description) if @blog.description.present? %>" st_image="<%= @blog.main_pic.url if @blog.main_pic.present? %>"></span>
+      </div>
+    </div>
+
+    <div class='row-fluid blog-description'>
+      <div class='span2 author-details'>
+        <%= image_tag(@blog.author.profile_pic_url, size: '90x90') if @blog.author.profile_pic.present? %>
+        </br>
+        <span class='author-name'>
+          By <%= @blog.author.name %>
+        </span>
+        </br>
+        <span class='time'>
+          <%= last_updated_at(@blog.updated_at) %>
+        </span>
+      </div>
+
+      <div class='span10' style="padding-top:4ex;">
+        <%= sanitize(@blog.description) if @blog.description.present? %>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class='span8 offset2'>
+        </br>
+        Topics:
+        <% if @blog.tags.present? %>
+          <% @blog.tags.each do |tag| %>
+            <%= link_to tag.title.upcase, tag_path(tag), class: 'tag' %> <% if @blog.tags.last != tag %>,<% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class='span12'>
+        </br>
+        <hr>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class='span8 offset2'>
+        <% if !current_user %>
+          <b><%= link_to 'Sign in', login_path, :'data-toggle' => 'modal', :'data-target' => '#loginModal' %></b>
+        <% end %>
+        <span class='pull-right'>
+          <b><%= @blog.users.count %> people following</b>
+        </span>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class='span8 offset2'>
+        <textarea rows='4' class='field span12' id='comment_area'></textarea>
+      </div>
+    </div>
+
+    <div class='row-fluid'>
+      <div class='span8 offset2'>
+        <span class='pull-left' id='follow_status'>
+          <% if current_user %>
+            <% if current_user.following_blog?(@blog.id) %>
+              <%#= link_to_function '+Unfollow', 'unfollow_blog()', class: 'btn btn-default' %>
+              <%= link_to '+Unfollow', unfollow_blog_path(@blog.id), class: 'btn btn-default follow' %>
+            <% else %>
+              <%#= link_to_function '+Follow', 'follow_blog()', class: 'btn btn-default' %>
+              <%= link_to '+Follow', follow_blog_path(@blog.id), class: 'btn btn-default follow' %>
+            <% end %>
+          <% else %>
+            <%= link_to '+Follow', login_path, class: 'btn btn-default follow', :'data-toggle' => 'modal', :'data-target' => '#loginModal' %>
+          <% end %>
+        </span>
+        <span class='pull-right'>
+          <% if current_user %>
+            <%= link_to_function 'POST COMMENT', 'postComment()', class: 'btn btn-default comment' %>
+          <% else %>
+            <%= link_to 'POST COMMENT', login_path, class: 'btn btn-default comment', :'data-toggle' => 'modal', :'data-target' => '#loginModal' %>
+          <% end %>
+        </span>
+      </div>
+    </div>
+
+    <div class='row-fluid' style='padding-top: 2em;'>
+      <div class='span8 offset2 sort'>
+        <% if (!params[:basis].present? && !params[:direction].present?) || (params[:direction].present? && params[:direction].downcase == 'desc') %>
+          <strong><%= link_to 'Newest', '?direction=desc' %></strong> |
+        <% else %>
+          <%= link_to 'Newest', '?direction=desc' %> |
+        <% end %>
+
+        <% if params[:direction].present? && params[:direction].downcase == 'asc' %>
+          <strong><%= link_to 'Oldest', '?direction=asc' %></strong> |
+        <% else %>
+          <%= link_to 'Oldest', '?direction=asc' %> |
+        <% end %>
+
+        <% if params[:basis].present? && params[:basis].downcase == 'top_comments' %>
+          <strong><%= link_to 'Top Comments', '?basis=top_comments' %></strong> |
+        <% else %>
+          <%= link_to 'Top Comments', '?basis=top_comments' %> |
+        <% end %>
+
+        <hr style='margin: 5px; margin-bottom: 1em;'>
+
+        <% @comments.each do |comment| %>
+          <div class='row-fluid'>
+            <div class='span1'>
+              <%= image_tag(comment.user.profile_pic, width: '100%') if comment.user.present? %>
+            </div>
+            <div class='span11'>
+              <div class='row-fluid'>
+                <div class='span4'>
+                  <%= comment.user.full_name if comment.user.present? %>
+                </div>
+                <div class='pull-right'>
+                  <%= last_updated_at(comment.updated_at) %>
+                </div>
+              </div>
+              <div class='row-fluid'>
+                <div class='span12'>
+                  <%= sanitize(comment.message) if comment.message.present? %>
+                </div>
+              </div>
+              <div class='row-fluid'>
+                <div class='span6'>
+                  <% if current_user %>
+                    <%#= link_to 'Share', 'javascript:void(0);' %>
+                    <%#= link_to_function 'Delete', "deleteComment(#{comment.id})", style: 'margin-left: 0.4em;' %>
+                    <%= link_to('Delete', delete_comment_blog_path(@blog.id, comment_id: comment.id), style: 'margin-left: 0.4em;') if comment.user_id == current_user.id %>
+                  <% else %>
+                    <%#= link_to 'Share', login_path, :'data-toggle' => 'modal', :'data-target' => '#loginModal' %>
+                    <%= link_to 'Delete', login_path, :'data-toggle' => 'modal', :'data-target' => '#loginModal' %>
+                  <% end %>
+                </div>
+                <div class='pull-right'>
+                  <% if current_user %>
+                    <% if current_user.is_like(comment) %>
+                      <!-- <%#= link_to_function 'Unlike', "unlikeComment(#{comment.id})" %> / -->
+                      <%= link_to 'Unlike', unlike_comment_blog_path(@blog.id, comment_id: comment.id) %> /
+                    <% else %>
+                      <!-- <%#= link_to_function 'Like', "likeComment(#{comment.id})" %> / -->
+                      <%= link_to 'Like', like_comment_blog_path(@blog.id, comment_id: comment.id) %> /
+                    <% end %>
+                    <%= link_to_function 'Reply', "replyComment(#{comment.id})" %>
+                  <% else %>
+                    <%= link_to 'Like', login_path, :'data-toggle' => 'modal', :'data-target' => '#loginModal' %> /
+                    <%= link_to 'Reply', login_path, :'data-toggle' => 'modal', :'data-target' => '#loginModal' %>
+                  <% end %>
+                </div>
+              </div>
+
+              <%= get_all_children(comment) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class='span3 withshow'>
+    <div class='row-fluid'>
+      <div class='span12 mostpopularhead'>
+        <h5>Check this out</h5>
+      </div>
+    </div>
+
+    <div class='right_side_blogs mostpopular'>
+      <%= render '/blogs/right_blogs', :blogs => @right_blogs %>
+    </div>
+  </div>
+</div>
+
+<div class='row-fluid'>
+  <div class='span12'>
+    <hgroup class="hgroup">
+      <h2 class='span10 pull-left'>
+        More in <%=t '.title', :default => @blog.category.title.titleize if @blog.category.present? %>
+      </h2>
+    </hgroup>
+
+    <div class='row-fluid'>
+      <div class="span3 left_blogs_container">
+        <div class='row-fluid'>
+          <div class='span12 mostviewedhead'>
+            <h5>Hot Topics</h5>
+          </div>
+        </div>
+
+        <div id='left_side_blogs' class='mostviewed'>
+          <%= render '/blogs/left_blogs', :blogs => @left_blogs %>
+        </div>
+      </div><!--/span-->
+
+      <div class="span4 center_blogs_container">
+        <div class='row-fluid'>
+          <div class='span12 mostrecenthead'>
+            <h5><%= image_tag(asset_path('coffee_break.png'), width: '16px') %> Coffee Break</h5>
+          </div>
+        </div>
+
+        <div id='/blogs/center_blogs' class='mostrecent'>
+          <%= render '/blogs/center_blogs', :blogs => @center_blogs %>
+        </div>
+      </div><!--/span-->
+
+      <div class="span5 right_blogs_container">
+        <div class='row-fluid'>
+          <div class='span12 mostpopularhead'>
+            <h5>Check this out</h5>
+          </div>
+        </div>
+
+        <div class='right_side_blogs' class='mostpopular'>
+          <%= render '/blogs/right_blogs', :blogs => @right_blogs %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for :custom_javascripts do %>
+  function follow_blog() {
+    $.ajax({
+      url: '<%= follow_blog_path(@blog.id) %>',
+      type: 'GET',
+      success: function(response) {
+        $('#follow_status').html('<%= link_to_function '+Unfollow', 'unfollow_blog()', class: 'btn btn-default' %>');
+      },
+      error: function(response) {
+        console.log(response);
+      }
+    });
+  }
+
+  function unfollow_blog() {
+    $.ajax({
+      url: '<%= unfollow_blog_path(@blog.id) %>',
+      type: 'GET',
+      success: function(response) {
+        $('#follow_status').html('<%= link_to_function '+Follow', 'follow_blog()', class: 'btn btn-default' %>');
+      },
+      error: function(response) {
+        console.log(response);
+      }
+    });
+  }
+
+  function postComment() {
+    msg = $('#comment_area').val().trim();
+
+    if(msg != '') {
+      // $.ajax({
+      //   url: '<%= post_comment_blog_path(@blog.id) %>',
+      //   type: 'GET',
+      //   data: {
+      //     message: msg
+      //   },
+      //   success: function(response) {
+      //     $('#follow_status').html('<%= link_to_function '+Follow', 'follow_blog()', class: 'btn btn-default' %>');
+      //   },
+      //   error: function(response) {
+      //     console.log(response);
+      //   }
+      // });
+      location.href = '/blogs/<%= @blog.id %>/post_comment?message=' + msg;
+    }
+    else {
+      alert('It seems you\'re attempting to post an empty comment.')
+    }
+  }
+
+  function replyComment(id) {
+    msg = $('#comment_area').val().trim();
+
+    if(msg != '') {
+      // $.ajax({
+      //   url: '<%= post_comment_blog_path(@blog.id) %>',
+      //   type: 'GET',
+      //   data: {
+      //     message: msg,
+      //     parent_comment_id: id
+      //   },
+      //   success: function(response) {
+      //     $('#follow_status').html('<%= link_to_function '+Follow', 'follow_blog()', class: 'btn btn-default' %>');
+      //   },
+      //   error: function(response) {
+      //     console.log(response);
+      //   }
+      // });
+      location.href = '/blogs/<%= @blog.id %>/post_comment?message=' + msg + '&parent_comment_id=' + id;
+    }
+    else {
+      alert('It seems you\'re attempting to post an empty comment.')
+    }
+  }
+
+  function deleteComment(id) {
+    $.ajax({
+      url: '<%= delete_comment_blog_path(@blog.id) %>',
+      type: 'GET',
+      data: {
+        comment_id: id
+      },
+      success: function(response) {
+        $('#follow_status').html('<%= link_to_function '+Follow', 'follow_blog()', class: 'btn btn-default' %>');
+      },
+      error: function(response) {
+        console.log(response);
+      }
+    });
+  }
+
+  function likeComment(id) {
+    $.ajax({
+      url: '<%= like_comment_blog_path(@blog.id) %>',
+      type: 'GET',
+      data: {
+        comment_id: id
+      },
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(response) {
+        console.log(response);
+      }
+    });
+  }
+
+  function unlikeComment(id) {
+    $.ajax({
+      url: '<%= unlike_comment_blog_path(@blog.id) %>',
+      type: 'GET',
+      data: {
+        comment_id: id
+      },
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(response) {
+        console.log(response);
+      }
+    });
+  }
+<% end %>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "CareerThing" %></title>
+    <%= csrf_meta_tags %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_tag do -%>
+      var __st_loadLate=true;
+    <% end %>
+    <%= javascript_include_tag "application" -%>
+    <%= favicon_link_tag '/assets/favicon.ico?ver=2', :rel => 'shortcut icon' %>
+  </head>
+
+  <body id='main_body'>
+    <%= nav_bar :brand => image_tag(asset_path('careerthinglogo.png'), alt: 'CareerThing'), :brand_link => :root, :responsive => true do %>
+      <ul class="nav pull-left">
+        <% Category.only_parent_categories.each do |cat| %>
+          <% if cat.present? %>
+            <% if cat.child_categories.count == 0 %>
+	            <li><a href="<%=category_path(cat.slug)%>"><%=cat.title.upcase%></a></li>
+            <% else %>
+	            <li class="dropdown">
+                <a class="dropdown-toggle" href="<%=category_path(cat.slug)%>"><%=cat.title.upcase%> <b class="caret"></b></a>
+                <%=show_sub_category_menus(cat,'').html_safe() %>
+              </li>
+            <% end %>
+          <% end%>
+        <% end %>
+      </ul>
+      
+      <%= menu_group pull: :right do %>
+        <%= content_tag :a, 'Search', href: 'javascript:void(0);', id: 'openSearchDialog', class: 'btn', :data => { :html => true, :placement => 'bottom', :trigger => 'click', :content => "<form method='get' src='#{blogs_path}'><input type='text' name='query' id='query' class='form-control'><input type='submit' value='Submit' class='btn btn-default'></form>" } %>
+
+        <% if current_user %>
+          <%= image_tag(current_user.profile_pic_url, size: '34x34', style: 'margin-left: 1em;') if current_user.profile_pic.present? %>
+          <%= content_tag :a, 'Settings', href: edit_user_path(current_user), class: 'btn btn-default', style: 'margin-left: 1em;' %>
+          <%= content_tag :a, 'Sign out', href: signout_path, class: 'btn btn-default', style: 'margin-left: 1em;' %>
+        <% else %>
+          <%= content_tag :a, "Login", href: login_path, class: 'btn', :data => { toggle: 'modal', target: '#loginModal' }, style: 'margin-left: 1em;' %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <div class="container-fluid" style='padding: 0;'>
+      <%= bootstrap_flash %>
+
+      <div class='container'>
+        <%= yield %>
+      </div>
+
+      <div class='row-fluid'>
+        <div class='span12'>
+          <%= content_tag(:div, content_tag(:div, content_tag(:a, 'X', class: 'close', :'data-dismiss' => 'modal'), class: 'modal-header') + content_tag(:div, '', class: 'modal-body'), id:'loginModal', class: 'modal hide fade', role: 'dialog') %>
+        </div>
+      </div>
+
+      <footer>
+        <hr>
+        <p>&copy; Company 2013</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <!-- Javascripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <%= javascript_tag defer: 'defer' do -%>
+      var switchTo5x=true;
+      stLight.options({
+		  publisher: "ur-eaeb65d0-be5a-d951-5cc-af9aa51cc92e", 
+		  doNotHash: true, 
+		  doNotCopy: true, 
+		  hashAddressBar: false, 
+		  onhover: false
+	  });
+
+      $(function() {
+        $('#openSearchDialog').popover();
+      });
+
+      <%= yield :custom_javascripts %>
+    <% end %>
+  </body>
+</html>
